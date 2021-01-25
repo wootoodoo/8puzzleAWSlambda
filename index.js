@@ -7,8 +7,8 @@ const AWSXRay = require('aws-xray-sdk-core')
 const AWS = AWSXRay.captureAWS(require('aws-sdk'))
 
 exports.handler = function (event, context, callback) {
-    console.log("received event: ", event);
-    let a = event.array;
+    let obj = JSON.parse(event.body);
+    let a = obj.array;
     console.log("array a: ", a);
     var arr1 = a.split("#");
     var arr2 = [];
@@ -32,9 +32,5 @@ exports.handler = function (event, context, callback) {
         body: answerJSON
     };
     
-    if (answer.numSteps != -1) {
-        callback(null, response);
-    } else {
-        callback("code was unsolvable");
-    }
+    callback(null, response);
 }
